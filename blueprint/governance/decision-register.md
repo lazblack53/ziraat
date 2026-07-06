@@ -160,6 +160,21 @@ Nieuwe beslissingen: `ZD-xxxx` (vanaf ZD-0011). Records DR-002 t/m DR-006 (aange
 - **Succescriteria:** maandelijkse herhaling van de review; P1-acties (IC-validatie RR-001, git-besluit, eerste agent-review-run) binnen 30 dagen opgepakt.
 - **Reviewdatum:** 2026-08-01 · **Links:** 7/8-PDF's, `blueprint/workflows/full-governance-review.md`, `reports/governance/full-governance-review-2026-07-03.md`.
 
+## ZD-0011 — Lege domeinmappen knowledge/ en reports/: just-in-time aanmaak i.p.v. voorgebakken structuur
+
+- **Datum:** 2026-07-06 · **Status:** Approved · **Eigenaar:** Documentation-Manager (rol); besluit door gebruiker (opdracht "punt 3")
+- **Betrokken rollen:** Gebruiker (CEO), Documentation Manager, Architecture Guardian
+- **Context:** ZD-0010 maakte 8 lege `knowledge/`-domeinmappen en 6 lege `reports/`-submappen aan als voorgebakken structuur. Drie problemen: (1) sinds het git-besluit (06.07, change-log) trackt de repo lege mappen niet — schijfstand en repo-stand divergeren en de mappen overleven een clone niet; (2) lege mappen suggereren inhoud die er niet is (verbeterpunt uit projectinventarisatie 06.07); (3) de `knowledge/`-taxonomie komt uit een generieke corporate-template — domeinen als `sales/` en `business/` hebben in dit persoonlijke beleggingsproject geen producent.
+- **Besluit:** Alle 14 lege submappen verwijderd (`reports/governance/` blijft — bevat het eerste reviewrapport). De taxonomie en bestandsnaamformats blijven volledig gedocumenteerd in `knowledge/README.md` en `reports/README.md` als **conventie**: een submap ontstaat bij het eerste document dat erin geschreven wordt (Write-tool maakt bovenliggende mappen automatisch aan). Workflow-outputpaden zijn ongewijzigd.
+- **Waarom nu:** Direct na het git-besluit — dit is het moment waarop schijfstand en repo-stand gelijkgetrokken moeten worden, vóór de eerste workflow-runs (agent-review begin augustus).
+- **Alternatieven:** (1) niets doen — afgewezen: git-divergentie + schijnstructuur blijven; (2) `.gitkeep`-bestanden in alle 14 mappen — afgewezen: 14 lege bestanden zijn ruis zonder inhoudswinst; (3) mappen vullen met placeholder-kennis — afgewezen: forceert kennisduplicatie (verboden per ZD-0010/README zelf).
+- **Voordelen:** repo = schijf; structuur toont alleen wat bestaat; taxonomie blijft normatief. **Nadelen:** eerste schrijver per domein moet de README-conventie kennen (gemitigeerd: beide README's + dit record).
+- **Risico's:** workflow die een hard bestaand pad verwacht — gemitigeerd: alle workflows schrijven via de Write-tool die paden aanmaakt; geverifieerd dat geen workflow een `ls` op een lege map vereist.
+- **Impact:** architectuur/agents/prompts/tokens: geen; onderhoud: eenvoudiger (geen dode structuur in audits).
+- **Rollback:** `mkdir` van de betreffende mappen; taxonomie staat in de README's.
+- **Succescriteria:** eerste agent-review-run (aug 2026) schrijft correct naar `reports/agents/`; doc-audits vinden geen lege mappen meer.
+- **Reviewdatum:** 2026-10-01 · **Links:** `knowledge/README.md`, `reports/README.md`, change-log 2026-07-06.
+
 ---
 
 ## Legacy-records (vóór ZD-standaard; geldig tenzij anders vermeld)
