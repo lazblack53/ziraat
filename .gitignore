@@ -1,0 +1,9 @@
+# Grote binaire rapportcollectie (882 MB, PDF/Excel) — bron is de broker-pipeline, niet git
+raporlar/
+
+# Privacygevoelig: portfolio-screenshots + ruwe scraper-data
+portföyüm/
+
+# Lokale Claude Code-instellingen en runtime-bestanden
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
