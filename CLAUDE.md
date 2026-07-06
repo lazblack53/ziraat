@@ -21,7 +21,7 @@ This project is a personal investment-analysis system for BIST (Borsa Istanbul),
 | `.claude/agents/` | Agent definitions (11) | Yes |
 | `.claude/agent-memory/` | Per-agent persistent memory: IC reports (`ic_rapport_DDMMYYYY.md`), regime logs, feedback/reference notes | Yes |
 | `blueprint/` | Governance: books 1–4, constitution, decision register, passports, workflows | Yes |
-| `knowledge/`, `reports/` | Knowledge base and review-output scaffolding (largely empty; being filled per Documentation-Manager audits) | Yes |
+| `knowledge/`, `reports/` | Knowledge base and review-report output. Subfolders are created just-in-time with the first document (ZD-0011); taxonomy and filename formats live in each README | Yes |
 
 Git: repository on branch `main`; only the text/knowledge layer is versioned. `raporlar/` and `portföyüm/` are deliberately ignored (large binaries, privacy-sensitive screenshots — their source of truth is the daily broker pipeline). Commit after meaningful changes to agents, blueprint, or tooling.
 
