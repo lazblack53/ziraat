@@ -4,7 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This project is a PDF text extraction utility for investment reports from two brokers — ZFG Yatırım and İş Yatırım — paired with a multi-agent investment analysis system. The single script `lees_pdf.py` uses PyMuPDF to read PDFs stored under `raporlar/`.
+This project is a personal investment-analysis system for BIST (Borsa Istanbul), built around daily reports from two brokers — ZFG Yatırım and İş Yatırım. It has four layers:
+
+1. **Data** — `raporlar/` (broker PDFs/Excel, ~900 MB) and `portföyüm/` (portfolio screenshots + raw scraper data), fed by an external daily scraper pipeline that delivers zip bundles.
+2. **Tooling** — `lees_pdf.py` (PyMuPDF-based text extraction from PDFs and Excel).
+3. **Agents** — an Investment Committee of analysis agents plus a set of governance agents, defined in `.claude/agents/`, with persistent per-agent memory in `.claude/agent-memory/`.
+4. **Governance** — `blueprint/` (constitution, decision records ZD-xxxx, agent/prompt passports, workflows, risk register).
+
+## Project Layout
+
+| Path | Contents | In git? |
+|---|---|---|
+| `raporlar/` | Broker reports (ZFG categories 1–11, İş Yatırım 1–8, `IC Raporları/`) | No (`.gitignore`) |
+| `portföyüm/` | Portfolio screenshots (PNG) + `YYYY-MM-DD_ruwe-data/` archives (raw/tradingview/tefas) | No (`.gitignore`) |
+| `lees_pdf.py`, `CLAUDE.md` | Tooling and project instructions | Yes |
+| `.claude/agents/` | Agent definitions (11) | Yes |
+| `.claude/agent-memory/` | Per-agent persistent memory: IC reports (`ic_rapport_DDMMYYYY.md`), regime logs, feedback/reference notes | Yes |
+| `blueprint/` | Governance: books 1–4, constitution, decision register, passports, workflows | Yes |
+| `knowledge/`, `reports/` | Knowledge base and review-output scaffolding (largely empty; being filled per Documentation-Manager audits) | Yes |
+
+Git: repository on branch `main`; only the text/knowledge layer is versioned. `raporlar/` and `portföyüm/` are deliberately ignored (large binaries, privacy-sensitive screenshots — their source of truth is the daily broker pipeline). Commit after meaningful changes to agents, blueprint, or tooling.
 
 ## Dependencies
 
@@ -55,6 +74,12 @@ memory: project        # agents share project-scoped memory
 
 Agent files use hardcoded absolute paths (`/home/developer/projects/ziraat/`) when invoking `lees_pdf.py` via the Bash tool.
 
+**Governance agents** (review/meta layer, not part of the IC workflow): `Agent-Reviewer` (periodic agent audits), `Architecture-Guardian` (GO/REVISE/NO-GO on architecture and prompt changes), `Documentation-Manager` (doc audits, changelog/glossary), `Prompt-Architect` (prompt design per the Ziraat prompt standard), `Risk-Manager` (risk register, pre-execution risk assessment of *changes* — distinct from Risk-Yoneticisi, which assesses *investments*), `Token-Optimizer` (token-usage audits). Their mandates live in `blueprint/governance/agent-passports/`.
+
+**Agent memory**: each analysis agent persists knowledge in `.claude/agent-memory/<Agent-Name>/` with a `MEMORY.md` index. The authoritative IC decisions are `ic_rapport_DDMMYYYY.md` files under `Master-Stratejist/`; the recurring data-gap checklist is `Master-Stratejist/reference_data_gaps_terugkerend.md`. Read these before re-analyzing anything.
+
+**Key methodology rule (DR-003)**: entry/stop/target levels must use *Methode B* (multi-timeframe hold-reclaim). *Methode A* (resistance-swing: `entry_trigger ≈ resistance_20d × 1,005` with `target_1 = resistance_20d`) is structurally invalid — target below trigger by construction. The auto-generated `master-stratejist-advies-kader.{md,json}` in the daily bundles uses Methode A and is raw input, never an IC decision. Minimum net R:R (after ~0.8–1.0% round-trip costs) is 2x.
+
 ## Decision Engine
 
 Always prioritize in this order:
@@ -71,7 +96,11 @@ If signals conflict:
 
 ## Report Structure
 
-`raporlar/` contains PDF reports from two brokers, each in their own subtree.
+`raporlar/` contains PDF reports from two brokers, each in their own subtree, plus `IC Raporları/`.
+
+### IC Raporları (`raporlar/IC Raporları/`)
+
+Organized by month subdirectory. Contains the auto-generated daily `master-stratejist-advies-kader.{md,json}` (one running file per month, overwritten daily — raw TradingView-derived input, **not** a validated IC decision) and dated synthesis reports (`YYYY-MM-DD_turkiye-yatirim-report.md`). The real IC decisions live in `.claude/agent-memory/Master-Stratejist/ic_rapport_DDMMYYYY.md`.
 
 ### ZFG Yatırım (`raporlar/`)
 
@@ -92,9 +121,9 @@ Organized by category (numbered folders) and then by month subdirectory (`01.jan
   - Excel files named `Borsa_Yatirim_Fonlari_EXCEL_Tum_Veri_YYYY-MM-DD.xlsx` / `Menkul_Kiymet_Yatirim_Fonlari_EXCEL_Tum_Veri_YYYY-MM-DD.xlsx`
 - `11. Toplantı Notları` — Analyst meeting notes per company (bedrijfsbezoeken); filenames vary: `TICKER_Toplantı_Notları.pdf`, `CompanyName_Analist Toplantı Notu_DDMMYYYY.pdf`, or `CompanyName_YYYYMMDD.pdf`
 
-Portfolio screenshots live at the **project root**, not under `raporlar/`:
-- `portföyüm/` — User's personal portfolio screenshots (PNG); read with the Read tool directly as images:
-  `Read tool → file_path: /home/developer/projects/ziraat/portföyüm/Portföyüm.png`
+Portfolio data lives at the **project root**, not under `raporlar/`:
+- `portföyüm/` — User's portfolio screenshots, named `YYYY-MM-DD_HH-MM_portfoy.png`; read the newest one with the Read tool directly as an image. Also contains `YYYY-MM-DD_ruwe-data/` folders archiving raw scraper output (`raw/` HTML, `tradingview/`, `tefas/`) per bundle day.
+- Incoming zip bundles (`ziraat-is-report-*.zip` and variants) land in `portföyüm/`; the routing table for unpacking them lives in Claude's memory (`reference_bundle_routing`). After archiving, the zip is deleted.
 
 ZFG PDF filenames follow the pattern: `ZFG_YATIRIM_<type-code>_<date>-pdf_<id>.pdf`
 
@@ -104,7 +133,7 @@ Date format varies by report type:
 
 ### İş Yatırım (`raporlar/İş Yatırım/`)
 
-Organized by category (numbered folders) and then by month subdirectory (`06.jun`, etc.) or year. Filenames follow the pattern `YYYY-MM-DD_<ReportType>_DD-MM-YYYY.pdf`.
+Organized by category (numbered folders) and then by month subdirectory (`06.jun`, `07.jul`, etc.) or year. Older files follow the pattern `YYYY-MM-DD_<ReportType>_DD-MM-YYYY.pdf`; files imported since late June 2026 follow the Naamgevingsstandaard below (e.g. `2026-07-06_is-yatirim_elus-bulteni.pdf`). Article-text snapshots are saved as `.txt` alongside PDFs; İş Yatırım articles are often partially paywalled ("Locked marker: True" in the txt header) — the teaser above the paywall usually contains the key numbers.
 
 - `1. Teknik Bülten` — Daily technical bulletin (İş Yatırım)
 - `2. ELÜS Günlük Bülteni` — Daily ELÜS (equity/liquidity strategy) bulletin
@@ -127,8 +156,8 @@ YYYY-MM-DD_bron_rapporttype_korte-titel.ext
 | Veld | Waarden |
 |---|---|
 | `bron` | `zfg`, `is-yatirim` |
-| `rapporttype` | `sabah-stratejisi`, `teknik-bulten`, `elus-bulteni`, `fx-bulten`, `sirket-getiri`, `hisse-oneri`, `yabanci-oranlari`, `piyasalarda-bugun`, `varant-raporu`, `fx-teknik-analiz`, `ozel-rapor` |
-| `korte-titel` | optioneel, alleen bij speciale rapporten (bijv. ticker of onderwerp) |
+| `rapporttype` | `sabah-stratejisi`, `teknik-bulten`, `elus-bulteni`, `fx-bulten`, `sirket-getiri`, `hisse-oneri`, `haftalik-teknik-oneri`, `yabanci-oranlari`, `piyasalarda-bugun`, `varant-raporu`, `fx-teknik-analiz`, `ozel-rapor` |
+| `korte-titel` | optioneel, alleen bij speciale rapporten (bijv. ticker of onderwerp); vaste İş-`ozel-rapor`-suffixen: `pay-geri-alimlari`, `sermaye-artirimlari-temettu`, `aciga-satis`, `en-cok-onerilenler-degisiklik` |
 
 **Voorbeelden:**
 ```
