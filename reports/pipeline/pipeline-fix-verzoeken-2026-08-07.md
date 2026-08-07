@@ -1,6 +1,6 @@
 # Verzoeklijst scraper-pipeline-fixes — stand 07.08.2026
 
-**Status: doorgezet naar Hermes (pipeline-uitvoerder) op 07.08.2026.** Vervolgacties liggen bij Hermes; dit project monitort per bundel of de fixes landen (zie verificatiepunten onderaan).
+**Status: doorgezet naar Hermes (pipeline-uitvoerder) op 07.08.2026. Antwoord ontvangen dezelfde dag:** Hermes zegt gedragsmitigaties toe voor zijn `Report`-analyse (source-first, TV-versheidscheck, Methode-A-detectie, expliciete bronstatus/niet-gebruikte-data-secties) maar bevestigt de **infra-fixes niet** (yfinance/fitz-installatie, cache-waarschuwing in de .md, Hisse Öneri-hashveld, chart-screenshots, Methode-A-formule in de generator). Openstaand vervolgpunt richting Hermes: die infra-fixes expliciet bevestigen + de gmail-stap verwijderen (bron vervallen, zie punt 3). Dit project monitort per bundel of de fixes landen (zie verificatiepunten onderaan).
 
 Bestemd voor de beheerder van de externe scraper-pipeline (de bron van de dagelijkse `ziraat-is-report-*.zip`-bundels). Alle punten zijn buiten dit project geconstateerd maar niet oplosbaar vanuit dit project zelf. Gesorteerd op impact.
 
