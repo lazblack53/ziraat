@@ -1,6 +1,8 @@
 # Verzoeklijst scraper-pipeline-fixes — stand 07.08.2026
 
-Bestemd om door te sturen naar de beheerder van de externe scraper-pipeline (de bron van de dagelijkse `ziraat-is-report-*.zip`-bundels). Alle punten zijn buiten dit project geconstateerd maar niet oplosbaar vanuit dit project zelf. Gesorteerd op impact.
+**Status: doorgezet naar Hermes (pipeline-uitvoerder) op 07.08.2026.** Vervolgacties liggen bij Hermes; dit project monitort per bundel of de fixes landen (zie verificatiepunten onderaan).
+
+Bestemd voor de beheerder van de externe scraper-pipeline (de bron van de dagelijkse `ziraat-is-report-*.zip`-bundels). Alle punten zijn buiten dit project geconstateerd maar niet oplosbaar vanuit dit project zelf. Gesorteerd op impact.
 
 ---
 
@@ -49,5 +51,17 @@ Bestemd om door te sturen naar de beheerder van de externe scraper-pipeline (de 
 - Sinds 07.07 wisselt de İş-artikeltekst-laag onvoorspelbaar tussen bruikbare teasers en kaal navigatie-boilerplate. De PDF-nevenlinks ("Pdf rapora ulaşmak için tıklayınız") omzeilen de blokkade betrouwbaar en worden al door de pipeline meegepakt — dat werkt goed, graag zo houden. Structurele oplossing zou een account-quota-aanvulling zijn; ter afweging aan de beheerder.
 
 ---
+
+## Verificatiepunten per bundel (voor dit project, na doorzending aan Hermes)
+
+Bij elke nieuwe bundel checken of een fix geland is — per punt het snelste signaal:
+1. **yfinance**: geen `tradingview-error.txt` meer én `data_date` = bundeldatum in `tradingview-summary.json`.
+2. **Cache-waarschuwing**: `.md`-tabel toont een expliciete stale-markering wanneer de `.json` een `cache_note` bevat (test pas beoordeelbaar bij de eerstvolgende 429-dag).
+3. **Gmail**: `gmail-ziraat/`-submap weer aanwezig, geen `disabled_client` in de errors-array.
+4. **fitz**: `embedded-links/` structureel gevuld (niet meer aan/uit per dag).
+5. **Hisse Öneri**: nieuwe sha256 (≠ `598bf964...`) of een `unchanged_since`-veld in de manifest.
+6. **Chart-screenshots**: `tradingview/chart-screenshots/`-submap terug (of expliciete bevestiging dat het vervallen is).
+7. **Methode-A-kader**: `target_1 > entry_trigger` in `master-stratejist-advies-kader.json`, of de velden zijn verwijderd.
+8. **İş-quota**: "Unlock left" > 0 in de artikel-txt's (alleen ter info, geen harde eis).
 
 *Opgesteld vanuit het Ziraat-analyseproject; de gedetailleerde incidenthistorie per punt staat in de projectmemory (`feedback_pipeline_scraper_gaps`) en is op verzoek beschikbaar.*
