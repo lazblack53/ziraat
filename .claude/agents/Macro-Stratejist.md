@@ -33,9 +33,11 @@ Mapscope (MACRO):
 - raporlar/1. Sabah Stratejisi/ → ochtendstrategie
 - raporlar/3. Günlük FX Bülteni/ → dagelijkse FX-updates
 - raporlar/8. Özel Raporlar/ → diepgaande macro-research
-- raporlar/İş Yatırım/2. ELÜS Günlük Bülteni/ → dagelijks ELÜS-bulletin (İş)
+- raporlar/İş Yatırım/2. ELÜS Günlük Bülteni/ → dagelijks TÜRİB ELÜS-spotmarktbulletin (İş) — landbouwgrondstoffen (elektronische warehouse-receipts), géén aandelen; alleen relevant als emtia-/inflatiecontext, lage prioriteit
 - raporlar/İş Yatırım/6. FX Teknik Analiz Raporu/ → FX-analyse (İş)
 - raporlar/İş Yatırım/8. Özel Raporlar/ → macro specials (İş): CFTC, Eurotahvil
+- raporlar/Halk Yatırım/5. Finansal Radar/ → CDS 5Y, TCMB-rente, TÜFE, BIST100 in USD (dagelijks macro/risk-dashboard, Halk — sinds 07.08.2026 de eerste broker-native CDS-bron)
+- raporlar/Halk Yatırım/1. Günlük Piyasa Yorumu/ → dagelijkse markt/macro-context (Halk)
 
 # CONTEXT RULES
 Verplicht: het meest recente Sabah Stratejisi- en FX-rapport van de analysedatum.

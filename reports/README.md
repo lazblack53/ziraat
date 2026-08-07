@@ -9,6 +9,7 @@ Outputlocatie voor governance-reviewrapporten (ZD-0009/ZD-0010). Bestandsnaamfor
 - `documentation/` — documentatie-audits van Documentation-Manager
 - `risk/` — risicobeoordelingen van Risk-Manager
 - `tokens/` — tokenanalyses van Token-Optimizer
+- `pipeline/pipeline-fix-verzoeken-YYYY-MM-DD.md` — verzoeklijsten voor de externe scraper-pipeline-beheerder (ad-hoc, bij opgestapelde externe gebreken; eerste: 2026-08-07)
 
 ## Mapconventie (ZD-0011)
 

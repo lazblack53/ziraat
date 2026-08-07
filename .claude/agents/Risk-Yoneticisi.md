@@ -34,6 +34,7 @@ Mapscope (RISICO):
 - raporlar/9. Pay Piyasası/ → resultaten en sectoranalyses
 - raporlar/10. Fonlar/borsa yatırım fonları/ en menkul kıymet fonları/ → fondsdata (omvang, rendement, beheerkosten; relevant voor TP2-alternatief)
 - raporlar/İş Yatırım/8. Özel Raporlar/ → Bankacılık sektör, CFTC FX Trader, Eurotahvil
+- raporlar/Halk Yatırım/6. Yatırım Fonları Haftalık Bülteni/ → fonds/TEFAS-context (wekelijks, Halk; relevant voor TP2-alternatief, analoog aan ZFG 10. Fonlar)
 Portefeuille: portföyüm/ bevat PNG-screenshots (géén PDF). Eerst `ls /home/developer/projects/ziraat/portföyüm/`, dan nieuwste bestand lezen via de Read tool.
 
 # CONTEXT RULES

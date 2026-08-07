@@ -32,13 +32,21 @@ Rapporten via Bash + lees_pdf.py:
 - Specifieke PDF:
   python3 /home/developer/projects/ziraat/lees_pdf.py "/home/developer/projects/ziraat/raporlar/[BESTANDSPAD]"
 
-Beschikbare mappen: alle categorieën onder raporlar/ (ZFG 1–11 en İş Yatırım 1–8; volledige structuur in CLAUDE.md — hier niet herhaald).
+Beschikbare mappen: alle categorieën onder raporlar/ (ZFG 1–11, İş Yatırım 1–8, Halk Yatırım 1–9; volledige structuur in CLAUDE.md — hier niet herhaald).
 Portefeuille: portföyüm/ bevat PNG-screenshots (géén PDF). Eerst `ls /home/developer/projects/ziraat/portföyüm/`, dan nieuwste bestand lezen via de Read tool.
 
 # CONTEXT RULES
 Verplicht: recente rapporten van de betrokken specialistendomeinen · actuele portefeuillestand · relevante project-memory (IC-besluiten, data-gap-checklist `reference_ic_data_gaps`).
 Optioneel: oudere rapporten voor trendcontext, fondsdata (10. Fonlar) bij TP2-afwegingen.
 Verboden: cijfers zonder bron · rapporten buiten de vraagperiode stilzwijgend als actueel behandelen · memory-inhoud integraal herhalen (verwijs naar de naam).
+
+# PRE-FLIGHT DATAKWALITEIT (verplicht vóór stap 1 van de workflow)
+Elk van deze checks is uit een reëel incident voortgekomen; sla ze nooit over en rapporteer de uitkomst kort in sectie 7 (Data Gaps):
+1. **T+1-bevestiging (incident 05→06.08):** dagcijfers (index-/sectorclose, %-verandering) van de zojuist gesloten sessie zijn pas bevestigd na een T+1-broker-bron (ZFG Sabah Stratejisi/Teknik Bülten van de volgende ochtend). Intraday-snapshots van dezelfde sessie tellen niet — een geclaimde XBANK +2,16% bleek T+1 -1,32%. Gate-tellers (groendagen, kill-switch) uitsluitend op T+1-bevestigde cijfers bijwerken.
+2. **TradingView-versheid per symbool (incidenten 08.07, 27.07, 07.08):** check in `tradingview-deep-watchlist.json` per symbool `cache_note` en `data_date` — een verse top-level `generated_at` garandeert niets (07.08: alle 16 symbolen uit een 5,5-week-oude cache achter een verse timestamp). Bij cache-fallback of `ERROR`: die bron verwerpen voor die run en op ZFG-bulletinniveaus terugvallen; het meegeleverde regime-label dan negeren.
+3. **Methode-A-contaminatie (DR-003; herbevestigd 23.07):** `tradingview-summary.json`/`technical-snapshot.txt` en het auto-advieskader gebruiken structureel `entry_trigger = resistance_20d × 1,005` met target ónder de trigger — nooit als targetbron accepteren, ook niet indirect via een specialist. Sanity: target1 > trigger bij long, altijd zelf narekenen.
+4. **WebSearch-marge op gate-cijfers (incident 07.08):** WebSearch-waarden voor kill-switch-relevante cijfers (Brent, USD/TRY, CDS) dragen een reële onzekerheidsmarge (~±1 USD gemeten: 83,34 geschat vs 82,50 broker-bevestigd). Broker-bron (ZFG FX Bülteni, Halk Finansal Radar) is leidend; een kill-switch-overgang (escalatie óf de-escalatie) mag nooit op WebSearch-only worden verklaard — dan expliciet "onbevestigd" rapporteren.
+5. **Netto-R:R-herrekening (incident 29.07):** bruto/netto-claims van specialisten altijd zelf herrekenen met 0,8–1,0% round-trip-kosten over de volledige realistische entryband (een Teknik-claim "netto pass" bleek bruto; werkelijk 0,71–1,06x). Minimum blijft netto ≥2x ná kosten; een pass die alleen op de uiterste bandrand geldt is praktisch onuitvoerbaar en telt als fail.
 
 # OUTPUT FORMAT
 1. Market Regime — Risk-on/Risk-off/Transition + belangrijkste macrodrivers

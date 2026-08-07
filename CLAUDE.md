@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This project is a personal investment-analysis system for BIST (Borsa Istanbul), built around daily reports from two brokers — ZFG Yatırım and İş Yatırım. It has four layers:
+This project is a personal investment-analysis system for BIST (Borsa Istanbul), built around daily reports from three brokers — ZFG Yatırım, İş Yatırım, and Halk Yatırım (added 07.08.2026). It has four layers:
 
 1. **Data** — `raporlar/` (broker PDFs/Excel, ~900 MB) and `portföyüm/` (portfolio screenshots + raw scraper data), fed by an external daily scraper pipeline that delivers zip bundles.
 2. **Tooling** — `lees_pdf.py` (PyMuPDF-based text extraction from PDFs and Excel).
@@ -15,7 +15,7 @@ This project is a personal investment-analysis system for BIST (Borsa Istanbul),
 
 | Path | Contents | In git? |
 |---|---|---|
-| `raporlar/` | Broker reports (ZFG categories 1–11, İş Yatırım 1–8, `IC Raporları/`) | No (`.gitignore`) |
+| `raporlar/` | Broker reports (ZFG categories 1–11, İş Yatırım 1–8, Halk Yatırım 1–9, `IC Raporları/`) | No (`.gitignore`) |
 | `portföyüm/` | Portfolio screenshots (PNG) + `YYYY-MM-DD_ruwe-data/` archives (raw/tradingview/tefas) | No (`.gitignore`) |
 | `lees_pdf.py`, `CLAUDE.md` | Tooling and project instructions | Yes |
 | `.claude/agents/` | Agent definitions (11) | Yes |
@@ -67,10 +67,10 @@ memory: project        # agents share project-scoped memory
 **Specialists:**
 | Agent | Focus | Priority | Primary Report Folders |
 |---|---|---|---|
-| Macro-Stratejist | TCMB policy, inflation, CDS, FX regime | 1–2 (highest) | ZFG: `1. Sabah Stratejisi`, `3. Günlük FX Bülteni`, `8. Özel Raporlar` — İş: `2. ELÜS Günlük Bülteni`, `6. FX Teknik Analiz Raporu`, `8. Özel Raporlar` |
-| Hisse-Analist | BIST equity fundamentals, sector rotation | 4 | ZFG: `1. Sabah Stratejisi`, `4. Günlük Şirket Getiri ve Çarpanları`, `5. Şirket Raporları`, `6. Hisse Öneri Portföyü`, `8. Özel Raporlar`, `9. Pay Piyasası`, `11. Toplantı Notları` — İş: `3. Günlük Yabancı Oranları`, `7. Şirket Raporları`, `8. Özel Raporlar` |
-| Teknik-Analist | Chart timing, entry/exit levels | 5 (lowest) | ZFG: `2. Günlük Teknik Bülten`, `7. Haftalık Teknik Hisse Önerileri` — İş: `1. Teknik Bülten`, `6. FX Teknik Analiz Raporu` |
-| Risk-Yoneticisi | Drawdown, concentration, stop-loss | Final filter | ZFG: `8. Özel Raporlar`, `9. Pay Piyasası`, `10. Fonlar` — İş: `8. Özel Raporlar` (Bankacılık sektör, CFTC) |
+| Macro-Stratejist | TCMB policy, inflation, CDS, FX regime | 1–2 (highest) | ZFG: `1. Sabah Stratejisi`, `3. Günlük FX Bülteni`, `8. Özel Raporlar` — İş: `2. ELÜS Günlük Bülteni`, `6. FX Teknik Analiz Raporu`, `8. Özel Raporlar` — Halk: `5. Finansal Radar`, `1. Günlük Piyasa Yorumu` |
+| Hisse-Analist | BIST equity fundamentals, sector rotation | 4 | ZFG: `1. Sabah Stratejisi`, `4. Günlük Şirket Getiri ve Çarpanları`, `5. Şirket Raporları`, `6. Hisse Öneri Portföyü`, `8. Özel Raporlar`, `9. Pay Piyasası`, `11. Toplantı Notları` — İş: `3. Günlük Yabancı Oranları`, `7. Şirket Raporları`, `8. Özel Raporlar` — Halk: `7. Analist Tavsiyeleri ve Hedef Fiyatları`, `8. Yabancı Takas Oranları`, `9. Özel Raporlar` |
+| Teknik-Analist | Chart timing, entry/exit levels | 5 (lowest) | ZFG: `2. Günlük Teknik Bülten`, `7. Haftalık Teknik Hisse Önerileri` — İş: `1. Teknik Bülten`, `6. FX Teknik Analiz Raporu` — Halk: `2. Günlük Teknik Bülten`, `3. VİOP Teknik Analiz Bülteni`, `4. Sentiment Algo Bülteni` |
+| Risk-Yoneticisi | Drawdown, concentration, stop-loss | Final filter | ZFG: `8. Özel Raporlar`, `9. Pay Piyasası`, `10. Fonlar` — İş: `8. Özel Raporlar` (Bankacılık sektör, CFTC) — Halk: `6. Yatırım Fonları Haftalık Bülteni` |
 
 Agent files use hardcoded absolute paths (`/home/developer/projects/ziraat/`) when invoking `lees_pdf.py` via the Bash tool.
 
@@ -96,7 +96,7 @@ If signals conflict:
 
 ## Report Structure
 
-`raporlar/` contains PDF reports from two brokers, each in their own subtree, plus `IC Raporları/`.
+`raporlar/` contains PDF reports from three brokers, each in their own subtree, plus `IC Raporları/`.
 
 ### IC Raporları (`raporlar/IC Raporları/`)
 
@@ -136,13 +136,29 @@ Date format varies by report type:
 Organized by category (numbered folders) and then by month subdirectory (`06.jun`, `07.jul`, etc.) or year. Older files follow the pattern `YYYY-MM-DD_<ReportType>_DD-MM-YYYY.pdf`; files imported since late June 2026 follow the Naamgevingsstandaard below (e.g. `2026-07-06_is-yatirim_elus-bulteni.pdf`). Article-text snapshots are saved as `.txt` alongside PDFs; İş Yatırım articles are often partially paywalled ("Locked marker: True" in the txt header) — the teaser above the paywall usually contains the key numbers.
 
 - `1. Teknik Bülten` — Daily technical bulletin (İş Yatırım)
-- `2. ELÜS Günlük Bülteni` — Daily ELÜS (equity/liquidity strategy) bulletin
+- `2. ELÜS Günlük Bülteni` — Daily TÜRİB ELÜS spot-market bulletin (Elektronik Ürün Senedi: electronic warehouse receipts for agricultural commodities — **not** equities; limited relevance for BIST equity analysis)
 - `3. Günlük Yabancı Oranları` — Daily foreign investor ratio report
 - `4. Piyasalarda Bugün` — Daily market summary bulletin
 - `5. İş Varant Raporu` — Daily warrant report
 - `6. FX Teknik Analiz Raporu` — Daily FX technical analysis (published on select days)
 - `7. Şirket Raporları` — Company initiation/update reports, organized by year (e.g. `2026/`)
 - `8. Özel Raporlar` — Periodic special reports: sector analyses (Bankacılık), CFTC FX Trader, Eurotahvil market updates
+
+### Halk Yatırım (`raporlar/Halk Yatırım/`)
+
+Added 07.08.2026 as a third daily broker source. Organized by category (numbered folders) and then by month subdirectory (`08.aug`, etc.), same convention as the other two brokers. Each report's own `.txt` snapshot carries a `Use:` header line from the scraper (e.g. "Risk Officer: CDS, TCMB rate...") that summarizes its intended analytical role — worth reading when triaging a new/unfamiliar Halk report type.
+
+- `1. Günlük Piyasa Yorumu` — Daily market/macro/BIST commentary
+- `2. Günlük Teknik Bülten` — Daily technical bulletin: XU100/XU030/XBANK levels, MA, MACD, RSI, SuperTrend
+- `3. VİOP Teknik Analiz Bülteni` — Daily futures (VİOP) technical analysis: XU030, USD/TRY, gold/silver pivots, open interest
+- `4. Sentiment Algo Bülteni` — Daily BIST30 sentiment/breadth/momentum leaders & laggards
+- `5. Finansal Radar` — Daily macro/risk dashboard: CDS 5Y, TCMB policy rate, TÜFE, BIST100 in USD, global comparison data — the first broker-native source for CDS Turkey 5Y (previously a chronic WebSearch-only data gap, see `reference_data_gaps_terugkerend`)
+- `6. Yatırım Fonları Haftalık Bülteni` — Weekly fund/TEFAS context bulletin (published Mondays, stays current through the week)
+- `7. Analist Tavsiyeleri ve Hedef Fiyatları` — Weekly consensus analyst target prices/upside (valuation sanity-check, not a standalone buy signal; published Mondays)
+- `8. Yabancı Takas Oranları` — Foreign custody/clearing ratio analysis (foreign-flow scout)
+- `9. Özel Raporlar` — Irregular/on-request reports, e.g. Fiyat Tespit Raporu değerlendirmesi (IPO price-determination report reviews) — no month subfolder needed yet given the low, irregular volume; revisit if volume grows
+
+**Note (07.08.2026):** the four specialist agents' "Mapscope" sections (in `.claude/agents/*.md`) were updated the same day to include their relevant Halk Yatırım folders, and Master-Stratejist additionally received a new "PRE-FLIGHT DATAKWALITEIT" section (5 mandatory data-quality checks consolidating incident-learned rules) — both on explicit user request, as direct edits rather than through the formal Prompt-Architect/Architecture-Guardian review flow. The `<!-- blueprint: ... -->` footer of each file (decision_record, laatste_review, passport) was deliberately left untouched, since no formal review actually happened — those footers now understate what changed. All edits are logged in `blueprint/governance/change-log.md` (2026-08-07 entries); if a governance audit is run, flag this drift and consider a retroactive ZD/passport update.
 
 ## Naamgevingsstandaard (nieuwe bestanden)
 
@@ -155,9 +171,9 @@ YYYY-MM-DD_bron_rapporttype_korte-titel.ext
 
 | Veld | Waarden |
 |---|---|
-| `bron` | `zfg`, `is-yatirim` |
-| `rapporttype` | `sabah-stratejisi`, `teknik-bulten`, `elus-bulteni`, `fx-bulten`, `sirket-getiri`, `hisse-oneri`, `haftalik-teknik-oneri`, `yabanci-oranlari`, `piyasalarda-bugun`, `varant-raporu`, `fx-teknik-analiz`, `ozel-rapor` |
-| `korte-titel` | optioneel, alleen bij speciale rapporten (bijv. ticker of onderwerp); vaste İş-`ozel-rapor`-suffixen: `pay-geri-alimlari`, `sermaye-artirimlari-temettu`, `aciga-satis`, `en-cok-onerilenler-degisiklik` |
+| `bron` | `zfg`, `is-yatirim`, `halk` |
+| `rapporttype` | `sabah-stratejisi`, `teknik-bulten`, `elus-bulteni`, `fx-bulten`, `sirket-getiri`, `hisse-oneri`, `haftalik-teknik-oneri`, `yabanci-oranlari`, `piyasalarda-bugun`, `varant-raporu`, `fx-teknik-analiz`, `ozel-rapor`; Halk-specifiek: `piyasa-yorumu`, `viop-teknik-analiz`, `sentiment-algo`, `finansal-radar`, `fon-bulteni`, `analist-tavsiyeleri`, `yabanci-takas-oranlari` |
+| `korte-titel` | optioneel, alleen bij speciale rapporten (bijv. ticker of onderwerp); vaste İş-`ozel-rapor`-suffixen: `pay-geri-alimlari`, `sermaye-artirimlari-temettu`, `aciga-satis`, `en-cok-onerilenler-degisiklik`; vaste Halk-`ozel-rapor`-suffix: `fiyat-tespit-<ticker/onderwerp>` |
 
 **Voorbeelden:**
 ```
@@ -167,6 +183,8 @@ YYYY-MM-DD_bron_rapporttype_korte-titel.ext
 2026-06-16_is-yatirim_elus-bulteni.pdf
 2026-06-16_is-yatirim_piyasalarda-bugun.txt
 2026-06-16_is-yatirim_fx-teknik-analiz.pdf
+2026-08-07_halk_finansal-radar.pdf
+2026-08-07_halk_ozel-rapor_fiyat-tespit-bewen-enerji.pdf
 ```
 
 **Uitzonderingen:**

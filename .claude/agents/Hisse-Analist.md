@@ -39,6 +39,9 @@ Mapscope (AANDELEN):
 - raporlar/İş Yatırım/3. Günlük Yabancı Oranları/ → dagelijkse buitenlandse posities (İş)
 - raporlar/İş Yatırım/7. Şirket Raporları/ → bedrijfsrapporten (İş), per jaar
 - raporlar/İş Yatırım/8. Özel Raporlar/ → sector-specials (İş)
+- raporlar/Halk Yatırım/7. Analist Tavsiyeleri ve Hedef Fiyatları/ → consensus koersdoelen/upside (wekelijks, Halk) — waarderings-sanity-check, geen zelfstandig koopsignaal
+- raporlar/Halk Yatırım/8. Yabancı Takas Oranları/ → buitenlandse takas-posities (Halk)
+- raporlar/Halk Yatırım/9. Özel Raporlar/ → o.a. Fiyat Tespit Raporu-beoordelingen bij IPO's (Halk, onregelmatig)
 
 # CONTEXT RULES
 Verplicht: het marktregime van Macro-Stratejist (via Master-Stratejist) · recente multiples of resultaten voor elk genoemd aandeel.

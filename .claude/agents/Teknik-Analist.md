@@ -35,6 +35,9 @@ Mapscope (TECHNISCH):
 - raporlar/7. Haftalık Teknik Hisse Önerileri/ → image-based PDF's: levert alleen coverpagina (~300 tekens); bij output < 500 tekens meld "image-based PDF, geen bruikbare technische data"
 - raporlar/İş Yatırım/1. Teknik Bülten/ → dagelijks technisch bulletin (İş)
 - raporlar/İş Yatırım/6. FX Teknik Analiz Raporu/ → FX-analyse (İş, verschijnt niet dagelijks)
+- raporlar/Halk Yatırım/2. Günlük Teknik Bülten/ → XU100/XU030/XBANK-niveaus, MA/MACD/RSI/SuperTrend (dagelijks, Halk)
+- raporlar/Halk Yatırım/3. VİOP Teknik Analiz Bülteni/ → VİOP/futures-technisch: XU030, USD/TRY, goud/zilver-pivots, open interest (dagelijks, Halk)
+- raporlar/Halk Yatırım/4. Sentiment Algo Bülteni/ → BIST30-sentiment/breedte/momentum leiders-achterblijvers (dagelijks, Halk)
 
 # CONTEXT RULES
 Verplicht: de picks van Master-Stratejist/Hisse-Analist waarvoor timing wordt gevraagd · het meest recente technische bulletin dat de ticker dekt.
