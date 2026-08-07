@@ -175,6 +175,25 @@ Nieuwe beslissingen: `ZD-xxxx` (vanaf ZD-0011). Records DR-002 t/m DR-006 (aange
 - **Succescriteria:** eerste agent-review-run (aug 2026) schrijft correct naar `reports/agents/`; doc-audits vinden geen lege mappen meer.
 - **Reviewdatum:** 2026-10-01 · **Links:** `knowledge/README.md`, `reports/README.md`, change-log 2026-07-06.
 
+## ZD-0012 — Halk Yatırım als 3e bron, monitor-modus, broker-precedentie en pre-flight-datakwaliteit (retroactieve formalisering direct-edits 07.08)
+
+- **Datum:** 2026-08-07 · **Status:** Approved · **Eigenaar:** Master-Stratejist (rol); besluiten door gebruiker (opdrachten "pak 8, 4 en 2 op" en "pak 1, 3, 6, 7 en 9 op" na structuuranalyse)
+- **Betrokken rollen:** Gebruiker (CEO), Master-Stratejist, vier IC-specialisten; Prompt-Architect/Architecture-Guardian bewust NIET betrokken (zie Context)
+- **Context:** Op 07.08 zijn in één dag meerdere structuurwijzigingen doorgevoerd als directe edits, op expliciet gebruikersverzoek buiten het formele reviewtraject (AskUserQuestion-keuze "Direct zelf toevoegen (snel)"), na een trajectanalyse over mappen/agents/memory. Dit record formaliseert ze retroactief zodat de governance-administratie klopt met de praktijk.
+- **Besluit (samengevat, details in change-log 2026-08-07):**
+  1. **Halk Yatırım als 3e dagelijkse broker-bron**: mapstructuur `raporlar/Halk Yatırım/1-9/` (conventie identiek aan ZFG/İş), Naamgevingsstandaard `bron: halk`, mapscope-uitbreiding over de vier specialisten + Master. Sluit het chronische CDS-5Y-datagat via Finansal Radar (broker-native, dagelijks).
+  2. **Monitor-modus als default voor de dagelijkse check** (`blueprint/workflows/daily-monitor-workflow.md`): Master-only gate/trigger/portefeuille-check met escalatiecriteria E1–E7 naar de volledige IC-workflow; output in aparte `monitor_DDMMYYYY.md`-reeks, `ic_rapport_`-reeks blijft exclusief voor volledige IC-besluiten. Aanleiding: 20+ opeenvolgende volledige runs (~150k tokens) met gate-bepaalde GEEN ACTIE-uitkomst.
+  3. **Broker-precedentieregel technische niveaus**: ZFG primair, İş/Halk cross-checks; >1%-divergentie expliciet melden; bronwissel binnen één setup verboden zonder vermelding; Sentiment Algo nooit niveaubron (Teknik-Analist-prompt + Master-conflictregel).
+  4. **PRE-FLIGHT DATAKWALITEIT** in Master-prompt: 5 verplichte checks (T+1-bevestiging, TV-cache_note/data_date, Methode-A-detectie, WebSearch-marge, netto-R:R-herrekening) — consolidatie van incident-geleerde memory-regels naar afdwingbare promptregels.
+  5. **Flankerend**: ELÜS-beschrijvingscorrectie (TÜRİB-landbouwgrondstoffen, niet equity); `reports/pipeline/`-verzoeklijst (8 externe scraper-gebreken); memory-hygiëne (marktsignalen gesplitst per maand, data-gaps-checklist geherstructureerd naar status-tabel + archief, portefeuille-log gearchiveerd t/m juli).
+- **Waarom nu:** de wijzigingen waren al operationeel; zonder record claimen de agent-footers (DR-006, review 03.07) impliciet een dekking die er niet was — precies de drift die het register moet voorkomen.
+- **Alternatieven:** (1) volledig formeel traject vooraf (Prompt-Architect → Architecture-Guardian → ZD) — afgewezen door gebruiker: doorlooptijd woog niet op tegen het risico van deze specifieke wijzigingen (additieve mapscope/checklist, geen gedragslogica-omkering); (2) drift laten staan tot de augustus-Agent-Reviewer-run — afgewezen: register hoort de werkelijkheid te volgen, niet andersom.
+- **Voordelen:** administratie klopt weer; monitor-modus bespaart ~80% dagelijkse tokens; pre-flight/precedentie maken geleerde lessen afdwingbaar. **Nadelen/risico's:** precedent voor "direct edit, later formaliseren" — mitigatie: dit record benoemt het expliciet als uitzondering op gebruikersaanwijzing, niet als nieuwe standaard; prompt-passports zijn nog niet bijgewerkt → gedelegeerd aan de eerstvolgende prompt-review-run (augustus), samen met de al openstaande passport-vraag voor de 6 governance-agents (doc-audit 04.07).
+- **Impact:** agents: 5 promptbestanden gewijzigd (footers verwijzen nu naar dit record); architectuur: +1 workflow, +1 broker-subtree, +1 reports-outputlocatie; tokens: monitor-modus is een structurele besparing; memory: 3 bestanden gesplitst/geherstructureerd.
+- **Rollback:** monitor-modus schrappen uit Master-TASK (volledige workflow blijft intact gedocumenteerd); mapscope-regels verwijderen; Halk-map laten staan (data weggooien is nooit rollback).
+- **Succescriteria:** (a) eerste monitor-run produceert een bruikbaar `monitor_DDMMYYYY.md` en escaleert correct op de eerstvolgende gate-wijziging of inlegdag (uiterlijk 20.08); (b) augustus-Agent-Reviewer-run + prompt-review werken de passports bij; (c) Halk-cadans (m.n. categorieën 6-8) na ~2 weken observatie gedocumenteerd in `reference_bundle_routing`.
+- **Reviewdatum:** 2026-09-01 · **Links:** change-log 2026-08-07 (7 regels), `blueprint/workflows/daily-monitor-workflow.md`, `reports/pipeline/pipeline-fix-verzoeken-2026-08-07.md`, CLAUDE.md-note "07.08.2026", projectmemory `project_blueprint_status`.
+
 ---
 
 ## Legacy-records (vóór ZD-standaard; geldig tenzij anders vermeld)

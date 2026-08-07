@@ -77,6 +77,6 @@ Stop of escaleer naar Master-Stratejist wanneer:
 versie: v2.0
 eigenaar: rol Macro-specialist (constitution-rolmapping)
 laatste_review: 2026-07-03
-decision_record: DR-006
+decision_record: DR-006, ZD-0012
 passport: blueprint/governance/prompt-passports/macro-stratejist.md
 -->

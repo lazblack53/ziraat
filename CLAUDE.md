@@ -62,7 +62,8 @@ memory: project        # agents share project-scoped memory
 
 **Orchestrator** (`Master-Stratejist`):
 - Head of Investment Committee — coordinates the four specialist agents and synthesizes their output into a consolidated recommendation.
-- Workflow: (1) Macro-Stratejist → market regime, (2) Hisse-Analist → fundamental top-picks, (3) Teknik-Analist → entry/stop/target levels, (4) Risk-Yoneticisi → stress-test the plan, (5) consolidate into one coherent advice.
+- Full IC workflow: (1) Macro-Stratejist → market regime, (2) Hisse-Analist → fundamental top-picks, (3) Teknik-Analist → entry/stop/target levels, (4) Risk-Yoneticisi → stress-test the plan, (5) consolidate into one coherent advice.
+- **Monitor mode (default for the daily check, since 07.08.2026/ZD-0012):** Master-Stratejist alone verifies gate states, watchlist triggers, and the portfolio against the last `ic_rapport` — no specialist calls, output `monitor_DDMMYYYY.md`. Escalates to the full IC workflow on any of the criteria E1–E7 in `blueprint/workflows/daily-monitor-workflow.md` (gate change, trigger/stop hit, deposit day ±2, top-3 fundamental news, hedge alarm, critical data failure, explicit user request). The `ic_rapport_DDMMYYYY.md` series remains exclusively for full IC decisions.
 
 **Specialists:**
 | Agent | Focus | Priority | Primary Report Folders |
@@ -158,7 +159,7 @@ Added 07.08.2026 as a third daily broker source. Organized by category (numbered
 - `8. Yabancı Takas Oranları` — Foreign custody/clearing ratio analysis (foreign-flow scout)
 - `9. Özel Raporlar` — Irregular/on-request reports, e.g. Fiyat Tespit Raporu değerlendirmesi (IPO price-determination report reviews) — no month subfolder needed yet given the low, irregular volume; revisit if volume grows
 
-**Note (07.08.2026):** the four specialist agents' "Mapscope" sections (in `.claude/agents/*.md`) were updated the same day to include their relevant Halk Yatırım folders, and Master-Stratejist additionally received a new "PRE-FLIGHT DATAKWALITEIT" section (5 mandatory data-quality checks consolidating incident-learned rules) — both on explicit user request, as direct edits rather than through the formal Prompt-Architect/Architecture-Guardian review flow. The `<!-- blueprint: ... -->` footer of each file (decision_record, laatste_review, passport) was deliberately left untouched, since no formal review actually happened — those footers now understate what changed. All edits are logged in `blueprint/governance/change-log.md` (2026-08-07 entries); if a governance audit is run, flag this drift and consider a retroactive ZD/passport update.
+**Note (07.08.2026):** the 07.08 direct edits (Halk Yatırım mapscope across the four specialists + Master, the PRE-FLIGHT DATAKWALITEIT section, the broker-precedence rule, and the monitor-mode default) were made on explicit user request outside the formal Prompt-Architect/Architecture-Guardian flow, and are retroactively formalized in **ZD-0012** (`blueprint/governance/decision-register.md`); agent footers now reference `DR-006, ZD-0012`. The prompt-passports themselves have NOT yet been updated — that is delegated to the August prompt-review run (per ZD-0012), together with the still-open passport question for the six governance agents.
 
 ## Naamgevingsstandaard (nieuwe bestanden)
 
