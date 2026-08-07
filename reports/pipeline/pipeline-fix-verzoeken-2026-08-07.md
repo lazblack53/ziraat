@@ -9,11 +9,11 @@
 | 3 | Gmail | ✅ **VERWIJDERD** — nul gmail/disabled_client-vermeldingen in manifest/summary, errors-array leeg |
 | 4 | fitz/embedded-links | ✅ **GELAND** — 34 bestanden geleverd, geen skips |
 | 5 | Hisse Öneri | ✅ **GELAND** — manifest bevat nu `"unchanged_since": "2026-05-20"` (en de URL toont het echte 20.05-bestand) |
-| 6 | Chart-screenshots | ❌ nog afwezig (`chart_screenshots: 0`) — enige openstaande punt, bevestiging herstel/vervallen nog nodig |
+| 6 | Chart-screenshots | ✅ **GELAND, ~1 uur na het vervolgbericht** (19:21-bundel) — alle 5 satelliet-tickers (TSKB/TURSG/CIMSA/TOASO/TAVHL) terug, mét precies de gevraagde eerlijke-markering: prijzen/candles/SMA/RSI altijd geleverd, en bij de aanhoudende TradingView-429 op de 1D/4H/1H-ratings staat dat nu expliciet in de chart zelf ("TradingView ratings unavailable: ... HTTP 429") én in `chart_screenshots_summary.json` (`rating_error`/`rating_errors`-array) — exact het gevraagde patroon |
 | 7 | Methode-A-formule | ✅ **GELAND** — alle 5 watchlist-records: target_1 > trigger, nieuw `target_valid`-veld; tradingview-summary 17/17 sanity-PASS |
 | 8 | İş-quota | ➖ ongewijzigd 0 (ter info; cookie-optie ligt bij gebruiker) |
 
-Bonus: nieuwe "Bundle hygiene"-bron in de manifest (67 navigatie-ruislinks gecomprimeerd tot één info-regel). **Het vervolgbericht (`hermes-vervolgbericht-2026-08-07.md`) is hiermee grotendeels achterhaald — alleen punt over chart-screenshots (bevestigen herstel of vervallen) en de optionele cookie-vraag blijven relevant.**
+Bonus: nieuwe "Bundle hygiene"-bron in de manifest (67 navigatie-ruislinks gecomprimeerd tot één info-regel). **Status: alle acht punten zijn nu afgehandeld (7 gefixt, 1 bewust ter info/optioneel). Beide vervolgberichten zijn hiermee achterhaald — niets meer te versturen tenzij er een nieuwe regressie optreedt.**
 
 Bestemd voor de beheerder van de externe scraper-pipeline (de bron van de dagelijkse `ziraat-is-report-*.zip`-bundels). Alle punten zijn buiten dit project geconstateerd maar niet oplosbaar vanuit dit project zelf. Gesorteerd op impact.
 
