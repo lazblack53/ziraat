@@ -1,6 +1,19 @@
 # Verzoeklijst scraper-pipeline-fixes — stand 07.08.2026
 
-**Status: doorgezet naar Hermes (pipeline-uitvoerder) op 07.08.2026. Antwoord ontvangen dezelfde dag:** Hermes zegt gedragsmitigaties toe voor zijn `Report`-analyse (source-first, TV-versheidscheck, Methode-A-detectie, expliciete bronstatus/niet-gebruikte-data-secties) maar bevestigt de **infra-fixes niet** (yfinance/fitz-installatie, cache-waarschuwing in de .md, Hisse Öneri-hashveld, chart-screenshots, Methode-A-formule in de generator). Openstaand vervolgpunt richting Hermes: die infra-fixes expliciet bevestigen + de gmail-stap verwijderen (bron vervallen, zie punt 3). Dit project monitort per bundel of de fixes landen (zie verificatiepunten onderaan).
+**Status: doorgezet naar Hermes op 07.08.2026; antwoord + FIXES GELAND dezelfde dag.** De 19:08-bundel bewijst dat Hermes de infra-fixes wél heeft uitgevoerd (ondanks dat zijn tekstuele antwoord alleen gedragsmitigaties bevestigde). Verificatie-uitslag per punt:
+
+| # | Punt | Uitslag 19:08-bundel |
+|---|---|---|
+| 1 | yfinance | ✅ **GELAND** — geen `tradingview-error.txt`, alle 17 symbolen `data_date` = 07.08 (vers) |
+| 2 | Cache-waarschuwing | ✅ **GELAND, beter dan gevraagd** — bij 429 géén stille cache-fallback meer maar een eerlijke lege tabel met "Regime: ONBEKEND", expliciete Errors-sectie én een nieuwe "Data age"-kolom |
+| 3 | Gmail | ✅ **VERWIJDERD** — nul gmail/disabled_client-vermeldingen in manifest/summary, errors-array leeg |
+| 4 | fitz/embedded-links | ✅ **GELAND** — 34 bestanden geleverd, geen skips |
+| 5 | Hisse Öneri | ✅ **GELAND** — manifest bevat nu `"unchanged_since": "2026-05-20"` (en de URL toont het echte 20.05-bestand) |
+| 6 | Chart-screenshots | ❌ nog afwezig (`chart_screenshots: 0`) — enige openstaande punt, bevestiging herstel/vervallen nog nodig |
+| 7 | Methode-A-formule | ✅ **GELAND** — alle 5 watchlist-records: target_1 > trigger, nieuw `target_valid`-veld; tradingview-summary 17/17 sanity-PASS |
+| 8 | İş-quota | ➖ ongewijzigd 0 (ter info; cookie-optie ligt bij gebruiker) |
+
+Bonus: nieuwe "Bundle hygiene"-bron in de manifest (67 navigatie-ruislinks gecomprimeerd tot één info-regel). **Het vervolgbericht (`hermes-vervolgbericht-2026-08-07.md`) is hiermee grotendeels achterhaald — alleen punt over chart-screenshots (bevestigen herstel of vervallen) en de optionele cookie-vraag blijven relevant.**
 
 Bestemd voor de beheerder van de externe scraper-pipeline (de bron van de dagelijkse `ziraat-is-report-*.zip`-bundels). Alle punten zijn buiten dit project geconstateerd maar niet oplosbaar vanuit dit project zelf. Gesorteerd op impact.
 
