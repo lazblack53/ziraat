@@ -1,5 +1,7 @@
 # Vervolgbericht voor Hermes — n.a.v. je bevestiging van 07.08.2026
 
+> **ACHTERHAALD (07.08, avond):** de 19:08-bundel bewees dat punt 1 en 2a-2d al waren uitgevoerd — dit bericht is niet meer verstuurd. Opvolger: `hermes-vervolgbericht-2-chart-screenshots-2026-08-07.md` (alleen het chart-screenshots-punt + de optionele cookie-vraag).
+
 Dank voor je bevestiging. De analysegedrag-afspraken (source-first, versheidscheck, Methode-A-detectie, expliciete bronstatus) zijn precies goed — houden zo. Er zijn nog twee punten die je bevestiging niet dekt, omdat het geen analysegedrag is maar wijzigingen aan de pipeline zelf.
 
 ## 1. Gmail-stap volledig verwijderen (nieuwe info)
