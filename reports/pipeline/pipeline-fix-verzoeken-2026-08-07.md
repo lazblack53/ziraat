@@ -21,9 +21,8 @@ Bestemd voor de beheerder van de externe scraper-pipeline (de bron van de dageli
 
 ## P1 — chronisch, bron al weken uitgevallen
 
-### 3. Gmail-koppeling: OAuth-client uitgeschakeld (24e handelsdag)
-- **Symptoom:** sinds 06.07 geen `gmail-ziraat/`-submap meer. Foutmelding aanvankelijk `RefreshError: invalid_grant` (06–16.07), sinds 17.07 `RefreshError: disabled_client: The OAuth client was disabled` — de app-registratie zelf is uitgeschakeld, een token-refresh lost dit niet op.
-- **Fix:** de OAuth-client in de Google Cloud Console opnieuw activeren (of een nieuwe client registreren) en de autorisatie opnieuw doorlopen.
+### 3. ~~Gmail-koppeling: OAuth-client uitgeschakeld~~ — **VERVALLEN (07.08.2026)**
+- De gebruiker heeft bevestigd de Gmail-bron niet meer te gebruiken. **Geen fix nodig** — de `gmail-ziraat/`-stap mag uit de pipeline worden verwijderd (scheelt ook de dagelijkse `disabled_client`-foutmelding in de manifest).
 
 ### 4. `fitz`/PyMuPDF: aan/uit per host (embedded-links vallen willekeurig uit)
 - **Symptoom:** `{"source": "Embedded PDF links", "status": "skipped", "error": "No module named 'fitz'"}` op de meeste dagen; op 13–14.07 en 07.08 werkte het wél. Patroon suggereert meerdere hosts waarvan een deel PyMuPDF mist.
@@ -57,7 +56,7 @@ Bestemd voor de beheerder van de externe scraper-pipeline (de bron van de dageli
 Bij elke nieuwe bundel checken of een fix geland is — per punt het snelste signaal:
 1. **yfinance**: geen `tradingview-error.txt` meer én `data_date` = bundeldatum in `tradingview-summary.json`.
 2. **Cache-waarschuwing**: `.md`-tabel toont een expliciete stale-markering wanneer de `.json` een `cache_note` bevat (test pas beoordeelbaar bij de eerstvolgende 429-dag).
-3. **Gmail**: `gmail-ziraat/`-submap weer aanwezig, geen `disabled_client` in de errors-array.
+3. **Gmail**: ~~vervallen~~ — bron gedeprecieerd door gebruiker (07.08); ideaal eindbeeld: de `disabled_client`-fout verdwijnt uit de manifest doordat de stap verwijderd is. Afwezigheid van `gmail-ziraat/` is voortaan de verwachte normaaltoestand, geen gap.
 4. **fitz**: `embedded-links/` structureel gevuld (niet meer aan/uit per dag).
 5. **Hisse Öneri**: nieuwe sha256 (≠ `598bf964...`) of een `unchanged_since`-veld in de manifest.
 6. **Chart-screenshots**: `tradingview/chart-screenshots/`-submap terug (of expliciete bevestiging dat het vervallen is).
