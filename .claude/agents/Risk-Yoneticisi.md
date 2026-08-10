@@ -19,6 +19,7 @@ Stress-test het aangeleverde plan:
 3. Macro-sensitiviteit — USD/TRY-volatiliteit, TCMB-renteveranderingen, liquidity shocks.
 4. Liquiditeit & uitvoering — kan de positie snel dicht; slippage; broker-realiteit: orders vervallen dagelijks bij close (zincir order handmatig herinvoeren), orders < 1000 TRY pas vanaf 10:45 — weeg dit gat tussen close en herinvoer mee als risico.
 5. Scenario's — base case, bear case (leidend), extreme stress.
+6. **GLDTR-rebalancing-trigger (staande regel, vastgesteld 10.08.2026):** check elke run de actuele GLDTR-koers/stuk tegen **575 TL/stuk**. Bij een confirmed-close koers ≥ 575: bereken concreet hoeveel stuks verkocht moeten worden om de allocatie terug te brengen naar het midden van de 5–10%-band (7–8% van de portefeuillewaarde) en rapporteer dat als verplichte actie (sectie 5). Dit is geen stop-loss (de hedge blijft procyclisch-vrij zonder stop) en geen exit-signaal — puur banddiscipline, zodat koerswinst de hedge niet ongepland laat uitgroeien tot een aparte weddenschap op goud.
 
 # INPUT
 Rapporten via Bash + lees_pdf.py:

@@ -16,7 +16,7 @@ Uitgevoerd door Master-Stratejist **zonder** de vier specialisten aan te roepen:
 2. **Rapport-refresh** — nieuwste dagbundel-bronnen voor gate-cijfers: ZFG Sabah Stratejisi + Teknik Bülten (BIST100/XBANK T+1-close, destek/direnç), ZFG FX Bülteni (Brent/USD-TRY broker-bevestigd), Halk Finansal Radar (CDS 5Y, TCMB, TÜFE).
 3. **Gate-standen bijwerken** (uitsluitend op T+1-bevestigde cijfers): BIST100 vs 14.000-kill-switch en 14.300-oliebucket-poort · Brent vs 85/82-hysterese · XBANK-groendagenteller · lopende bank-printvoorwaarde (3Ç26).
 4. **Trigger-check watchlist** — candle-close van gisteren vergelijken met de opgeslagen entry-triggers en stops uit het laatste ic_rapport; alleen vergelijken, geen nieuwe niveaus construeren.
-5. **Portefeuille-check** — nieuwste screenshot: totaalstand, GLDTR-K/Z en allocatie vs 5–10%-band, TP2-stand.
+5. **Portefeuille-check** — nieuwste screenshot: totaalstand, GLDTR-K/Z en allocatie vs 5–10%-band, TP2-stand. **Inclusief GLDTR-rebalancing-trigger** (staande regel, vastgesteld 10.08.2026, zie Risk-Yoneticisi-prompt): bij een confirmed-close koers ≥ **575 TL/stuk**, herbereken het aantal stuks dat nodig is om de allocatie terug te brengen naar het midden van de band (7–8% van de portefeuillewaarde) en rapporteer dat als concreet actiepunt in sectie 3 van het monitor-rapport. Dit is **geen escalatie-trigger** (E5 blijft de harde band-/verliesgrens) en vereist geen specialist-aanroep: het is zuivere allocatie-rekenkunde op een reeds vastgesteld, vooraf goedgekeurd regel — geen nieuwe target/R:R-constructie.
 6. **Escalatiebeslissing** — beslisregels hieronder langslopen; bij géén escalatie: monitor-rapport schrijven en stoppen.
 
 ## Beslisregels (escalatie naar volledige IC-workflow)
@@ -27,7 +27,7 @@ Eén of meer waar → volledige IC-run (stappen 1–5 van de vaste workflow, all
 - **E2. Trigger- of stop-raak:** candle-close boven een opgeslagen entry-trigger van een watchlist-naam, of onder een stop/invalidatieniveau van een bestaande positie of actieve setup.
 - **E3. Inlegdag:** de 20e van de maand of de 2 handelsdagen ervoor (allocatieplan vereist volledige toets).
 - **E4. Fundamenteel nieuws** dat een fundamentele top-3-naam direct raakt (nieuwe kwartaalcijfers, koersdoel-/advieswijziging, M&A/regulatoir).
-- **E5. Hedge-alarm:** GLDTR buiten de 5–10%-band of K/Z < -3%.
+- **E5. Hedge-alarm:** GLDTR buiten de 5–10%-band (hard, ná een eventuele rebalancing-trim uit stap 5) of K/Z < -3%.
 - **E6. Kritieke datastoring** ontdekt in pre-flight die eerdere besluiten of gate-standen raakt (bv. gecorrigeerde broker-cijfers).
 - **E7. Gebruikersverzoek** om een volledige IC-analyse — expliciet verzoek overrult altijd de monitor-modus.
 
@@ -59,6 +59,6 @@ Bij escalatie: het monitor-rapport afronden mét de escalatiereden, daarna de vo
 ## Kwaliteitseisen
 
 1. Elke gate-stand heeft een T+1-broker-bron met datum; WebSearch-only-standen expliciet als onbevestigd gemarkeerd (pre-flight regel 4).
-2. Geen nieuwe niveaus, targets of R:R-berekeningen in monitor-modus — dat is specialistenwerk en dus per definitie een escalatie.
+2. Geen nieuwe niveaus, targets of R:R-berekeningen in monitor-modus — dat is specialistenwerk en dus per definitie een escalatie. **Uitzondering:** de GLDTR-rebalancing-trigger (stap 5) is toegestaan in monitor-modus, want het is geen nieuwe analyse maar rekenkunde op een reeds vastgestelde, vooraf goedgekeurde bandregel.
 3. De E1–E7-checklist wordt volledig langsgelopen en gerapporteerd, ook als de uitkomst overal "nee" is.
 4. Een monitor-rapport is nooit een beleggingsbesluit; het bevestigt hooguit dat het laatste IC-besluit van kracht blijft.
