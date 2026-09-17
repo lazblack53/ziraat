@@ -19,11 +19,13 @@ This project is a personal investment-analysis system for BIST (Borsa Istanbul),
 | `portföyüm/` | Portfolio screenshots (PNG) + `YYYY-MM-DD_ruwe-data/` archives (raw/tradingview/tefas) | No (`.gitignore`) |
 | `lees_pdf.py`, `CLAUDE.md` | Tooling and project instructions | Yes |
 | `.claude/agents/` | Agent definitions (11) | Yes |
-| `.claude/agent-memory/` | Per-agent persistent memory: IC reports (`ic_rapport_DDMMYYYY.md`), regime logs, feedback/reference notes | Yes |
+| `.claude/agent-memory/` | Per-agent persistent memory: IC reports (`ic_rapport_DDMMYYYY.md`), regime logs, feedback/reference notes | No (`.gitignore`, since 17.09.2026) |
 | `blueprint/` | Governance: books 1–4, constitution, decision register, passports, workflows | Yes |
 | `knowledge/`, `reports/` | Knowledge base and review-report output. Subfolders are created just-in-time with the first document (ZD-0011); taxonomy and filename formats live in each README | Yes |
 
-Git: repository on branch `main`; only the text/knowledge layer is versioned. `raporlar/` and `portföyüm/` are deliberately ignored (large binaries, privacy-sensitive screenshots — their source of truth is the daily broker pipeline). Commit after meaningful changes to agents, blueprint, or tooling.
+Git: repository on branch `main`; only the text/knowledge/tooling layer is versioned. `raporlar/`, `portföyüm/` and `.claude/agent-memory/` are deliberately ignored (large binaries, privacy-sensitive screenshots, and concrete personal portfolio figures respectively — repo went public on 17.09.2026, see below). Commit after meaningful changes to agents, blueprint, or tooling; agent-memory changes are no longer committed.
+
+**Note (17.09.2026):** this repo was converted from private to public. `.claude/agent-memory/` was purged from git history entirely (267 historical file versions, via `git filter-repo`) because it contains concrete personal portfolio figures (balances, position sizes, deposit amounts) — it now lives only on disk, untracked. One leaked balance figure in `blueprint/book-01-foundation/00-executive-summary.md` was redacted from history the same way. Going forward, agent-memory stays local-only; if it needs versioning again, use a separate private repo, not this one.
 
 ## Dependencies
 

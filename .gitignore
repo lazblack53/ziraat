@@ -4,6 +4,10 @@ raporlar/
 # Privacygevoelig: portfolio-screenshots + ruwe scraper-data
 portföyüm/
 
+# Privacygevoelig: dagelijkse IC-besluiten met concrete portefeuillecijfers
+# (07.09.2026: uit git-historie verwijderd bij private->publiek conversie; blijft lokaal, niet meer getrackt)
+.claude/agent-memory/
+
 # Lokale Claude Code-instellingen en runtime-bestanden
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
